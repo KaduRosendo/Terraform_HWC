@@ -1,18 +1,25 @@
-name: "Huawei Cloud CI/CD"
+name: "Huawei Cloud Deploy"
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master" ] # Certifique-se que sua branch principal se chama master
 
 jobs:
   terraform:
+    name: "Terraform"
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./infra 
+    
+    # Variáveis de ambiente globais para o Job
     env:
+      # Credenciais para o Backend S3/OBS
       AWS_ACCESS_KEY_ID: ${{ secrets.HW_ACCESS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.HW_SECRET_KEY }}
+      AWS_REGION: "la-south-2"
+      
+      # Força o Terraform a não buscar metadados da AWS
+      AWS_EC2_METADATA_DISABLED: "true"
+
+      # Variáveis para o Provider Huawei Cloud (usadas no variables.tf)
       TF_VAR_hw_ak: ${{ secrets.HW_ACCESS_KEY }}
       TF_VAR_hw_sk: ${{ secrets.HW_SECRET_KEY }}
       TF_VAR_hw_project_id: ${{ secrets.HW_PROJECT_ID }}
@@ -24,13 +31,17 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.5.7
+          terraform_version: 1.5.7 # Versão estável para evitar erro SHA256
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ./infra
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: ./infra
 
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: terraform apply -auto-approve
+        working-directory: ./infra
