@@ -1,23 +1,20 @@
 terraform {
   backend "s3" {
-    bucket   = "meu-terraform-state-hauwei-wave" # Verifique se a escrita está correta no console
+    bucket   = "meu-terraform-state-hauwei-wave" # Certifique-se de que o nome está identico ao console
     key      = "terraform.tfstate"
     region   = "la-south-2"
-    
-    endpoints = {
-      s3 = "https://obs.la-south-2.myhuaweicloud.com"
-    }
+    endpoint = "https://obs.la-south-2.myhuaweicloud.com"
 
-    # Configurações essenciais para Huawei OBS
+    # Desativa todas as verificações específicas da AWS
     skip_region_validation      = true
     skip_credentials_validation = true
     skip_metadata_api_check     = true
-    skip_requesting_account_id  = true # Necessário para não buscar conta AWS
+    skip_requesting_account_id  = true
     
-    # Mantenha esta linha para evitar o erro anterior de SHA256
-    skip_s3_checksum            = true 
+    # O SEGREDO: Força o Terraform a ignorar o Checksum que está dando erro
+    skip_s3_checksum            = true
     
-    # REMOVA OU COMENTE A LINHA ABAIXO:
-    # use_path_style           = true 
+    # IMPORTANTE: Mantenha como false (ou comente) para evitar o erro de Virtual Host
+    # use_path_style            = true 
   }
 }
