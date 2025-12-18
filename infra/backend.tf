@@ -11,6 +11,6 @@ terraform {
     skip_metadata_api_check     = true
     
     # Resolve o erro de integridade de dados na Huawei Cloud
-    skip_s3_checksum            = true
+    # skip_s3_checksum            = true
   }
 }
