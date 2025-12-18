@@ -17,7 +17,7 @@ variable "hw_project_id" {
 variable "hw_region" {
     description = "Região de deploy"
     type = string
-    default = "la-south-2a"
+    default = "la-south-2"
 }
 
 variable "bucket_name" {
