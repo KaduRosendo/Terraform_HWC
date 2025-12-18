@@ -1,3 +1,4 @@
+/*
 terraform {
   backend "s3" {
     bucket   = "meu-terraform-state-hauwei-wave" 
@@ -11,3 +12,4 @@ terraform {
     
   }
 }
+*/
