@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket   = "seu-nome-de-bucket-aqui" # Use o nome que ficou verde
+    bucket   = "meu-terraform-state-hauwei-wave"
     key      = "terraform.tfstate"
     region   = "la-south-2"
     
