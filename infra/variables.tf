@@ -23,5 +23,5 @@ variable "hw_region" {
 variable "bucket_name" {
     description = "Nome único para o bucket"
     type = string
-    default = "Meu-terraform-state-hauwei"
+    default = "meu-terraform-state-hauwei-wave"
 }
