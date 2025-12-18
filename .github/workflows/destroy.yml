@@ -1,16 +1,17 @@
-name: "Terraform Destroy"
+name: "Terraform Total Destroy"
 
 on:
-  workflow_dispatch: # Permite disparar manualmente pelo botão no GitHub
+  workflow_dispatch: # Disparo manual pelo site do GitHub
 
 jobs:
   destroy:
     runs-on: ubuntu-latest
     env:
+      # Credenciais para o Backend e Recursos
       AWS_ACCESS_KEY_ID: ${{ secrets.HW_ACCESS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.HW_SECRET_KEY }}
       AWS_REGION: "la-south-2"
-      AWS_EC2_METADATA_DISABLED: "true"
+      AWS_EC2_METADATA_DISABLED: "true" # Evita busca por conta AWS
       TF_VAR_hw_ak: ${{ secrets.HW_ACCESS_KEY }}
       TF_VAR_hw_sk: ${{ secrets.HW_SECRET_KEY }}
       TF_VAR_hw_project_id: ${{ secrets.HW_PROJECT_ID }}
@@ -22,12 +23,13 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.5.7 # Mesma versão para evitar erro de SHA256
+          terraform_version: 1.5.7 # Versão estável para Huawei OBS
 
       - name: Terraform Init
         run: terraform init
         working-directory: ./infra
 
       - name: Terraform Destroy
+        # O comando abaixo apaga TUDO o que estiver no state
         run: terraform destroy -auto-approve
         working-directory: ./infra

@@ -32,9 +32,7 @@ resource "huaweicloud_obs_bucket" "state_bucket" {
     bucket = var.bucket_name
     acl = "private"
     versioning = true 
-    lifecycle {
-      prevent_destroy = true
-    }
+    force_destroy = true
 }
 
 # 4. O Servidor (ECS)
