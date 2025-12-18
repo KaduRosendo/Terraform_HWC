@@ -2,7 +2,7 @@ name: "Huawei Cloud CI/CD"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   terraform:
