@@ -36,8 +36,7 @@ resource "huaweicloud_obs_bucket" "state_bucket" {
 
 # 4. O Servidor (ECS)
 data "huaweicloud_images_images" "ubuntu" {
-    name_regex = "Ubuntu 22.04"
-    most_recent = true
+    name_regex = "Ubuntu 22.04 server 64bit"
 }
 
 data "huaweicloud_compute_flavors" "basic" {
